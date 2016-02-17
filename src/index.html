@@ -8,33 +8,49 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
-    <body>
+    <body ng-app="mainApp">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
-        <form>
-            <label>User Name :</label><input type="text" name="username" id="username"  value="" >
-            <label>Password :</label><input type="password" name="password" id="password"  value="" >
 
-            <button name="login" id="login">Login </button>
+        <div ng-controller="EventCtrl">
+            <p>{{mainTitle}}</p>
+
+            <!--One time bind . It cannot be changed by angular js . just ot improve performance -->
+            <p>{{::mainTitle}}</p>
+            <div ng-repeat="item in namelist | orderBy: 'gId'" ng-class="(item.classSel == 0) ? 'blue':'red' ">
+                <label>First Name :</label><input type="text" name="firstname" id="firstname"  value="{{item.firstname}}" >
+                <label>Last Name  :</label><input type="text" name="lastname"  id="lastname"  value="{{item.lastname}}" >
+                <!--Using a defined controller object-->
+                <span ng-controller="NestedCont as nstcont"> <label>Age</label><input type="text" name="age" value="{{nstcont.age}}"> </span>
+                <button name="login" id="login" ng-mouseout="setIndex(0,item)"  ng-click="setIndex(1,item)"  ng-class="(index == 0) ? 'blue':'red' ">Login </button>
+
+            </div>
 
 
-        </form>
+            <!--BELOW IS THE CODE WITH OUT THE FILTER-->
+            <!--<div ng-class="(index == 0) ? 'blue':'red' ">-->
+            <!--<label>First Name :</label><input type="text" name="firstname" id="firstname"  value="{{namelist[0]['firstname']}}" >-->
+            <!--<label>Last Name :</label><input type="text" name="lastname" id="lastname"  value="{{namelist[0]['lastname']}}" >-->
+                <!--&lt;!&ndash;Using a defined controller object&ndash;&gt;-->
+                <!--<span ng-controller="NestedCont as nstcont"> <label>Age</label><input type="text" name="age" value="{{nstcont.age}}"> </span>-->
+            <!--<button name="login" id="login" ng-mouseout="setIndex(0)"  ng-click="setIndex(namelist[0]['gId'])"  ng-class="(index == 0) ? 'blue':'red' ">Login </button>-->
 
-        <script src="https://code.jquery.com/jquery-{{JQUERY_VERSION}}.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+                <!--</div>-->
 
+        </div>
+
+        <script src="js/angular.min.js"></script>
+        <script>
+            console.log("angular obj",angular);
+        </script>
+        <script src="js/module/mainApp.js"></script>
+        <script src="js/module/eventModule/EventModule.js"></script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

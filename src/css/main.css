@@ -272,3 +272,12 @@ textarea {
         page-break-after: avoid;
     }
 }
+
+
+.blue {
+    background-color: darkcyan;
+}
+
+.red {
+    background-color: rosybrown;
+}
